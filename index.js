@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
 const axios = require("axios").default;
+const { isThisMonth } = require("date-fns");
 
 const urlDB =
   process.env.NODE_ENV !== "production"
@@ -76,11 +77,8 @@ const fetch_dividend = async (url) => {
 
     await browser.close();
 
-    console.log({ result });
-
     return result && result.length ? Number(result[0].replace("$", "")) : 0;
   } catch (error) {
-    console.error(error);
     throw error;
   }
 };
@@ -88,9 +86,9 @@ const fetch_dividend = async (url) => {
 const exist_ticker = async (ticker) => {
   try {
     const { data } = await axios.get(`${urlDB}/ticker/${ticker}`);
-    return Boolean(data);
+    return { exists: Boolean(data), data };
   } catch (error) {
-    return false;
+    return { exists: false, data: null };
   }
 };
 
@@ -98,14 +96,19 @@ const store_dividend = async (ticker) => {
   const url = `https://seekingalpha.com/symbol/${ticker}/dividends/scorecard`;
 
   try {
-    const exists = await exist_ticker(ticker);
+    const { exists, data } = await exist_ticker(ticker);
+
     if (exists) {
-      const dividend = await fetch_dividend(url);
-      if (dividend > 0) {
-        await axios.put(`${urlDB}/ticker/${ticker}`, {
-          dividend: dividend,
-          updateAt: new Date(),
-        });
+      // ainda nao atualizou no mes
+      if (!isThisMonth(data.updateAt)) {
+        const dividend = await fetch_dividend(url);
+
+        if (dividend > 0) {
+          await axios.put(`${urlDB}/ticker/${ticker}`, {
+            dividend: dividend,
+            updateAt: new Date(),
+          });
+        }
       }
     } else {
       const dividend = await fetch_dividend(url);

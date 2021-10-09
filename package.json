@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.22.0",
+    "date-fns": "^2.25.0",
     "express": "^4.17.1",
     "json-server": "^0.17.0",
     "puppeteer": "^10.4.0"
