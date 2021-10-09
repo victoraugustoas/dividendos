@@ -14,7 +14,7 @@ const urlDB =
     ? "http://localhost:3000"
     : "http://db:3000";
 
-app.get("/:ticker", async (req, res) => {
+app.get("/ticker/:ticker", async (req, res) => {
   const ticker = String(req.params.ticker).toLowerCase();
 
   store_dividend(ticker);

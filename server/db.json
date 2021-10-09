@@ -4,6 +4,17 @@
       "dividend": 0.63,
       "updateAt": "2021-10-08T12:46:55.740Z",
       "id": "pld"
+    },
+    {
+      "dividend": null,
+      "updateAt": "2021-10-09T06:40:43.030Z",
+      "id": "favicon.ico"
+    },
+    {
+      "dividend": 1.07,
+      "ticker": "frt",
+      "updateAt": "2021-10-09T06:41:19.705Z",
+      "id": "frt"
     }
   ]
 }

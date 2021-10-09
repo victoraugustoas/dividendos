@@ -62,6 +62,7 @@ const exist_ticker = async (ticker) => {
 
 const store_dividend = async (ticker) => {
   const url = `https://seekingalpha.com/symbol/${ticker}/dividends/scorecard`;
+  console.log("🚀 ~ file: index.js ~ line 65 ~ conststore_dividend= ~ url", url)
 
   try {
     const exists = await exist_ticker(ticker);
