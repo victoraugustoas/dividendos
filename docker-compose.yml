@@ -1,3 +1,5 @@
+version: "3"
+
 networks:
   app:
     driver: bridge
@@ -22,3 +24,4 @@ services:
       - ./server/db.json:/data/db.json
     networks:
       - app
+    restart: always
