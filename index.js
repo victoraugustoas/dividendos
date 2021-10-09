@@ -101,10 +101,12 @@ const store_dividend = async (ticker) => {
     const exists = await exist_ticker(ticker);
     if (exists) {
       const dividend = await fetch_dividend(url);
-      await axios.put(`${urlDB}/ticker/${ticker}`, {
-        dividend: dividend > 0 ? dividend : null,
-        updateAt: new Date(),
-      });
+      if (dividend > 0) {
+        await axios.put(`${urlDB}/ticker/${ticker}`, {
+          dividend: dividend,
+          updateAt: new Date(),
+        });
+      }
     } else {
       const dividend = await fetch_dividend(url);
       await axios.post(`${urlDB}/ticker`, {
