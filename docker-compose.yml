@@ -11,6 +11,8 @@ services:
       - "3001:3001"
     expose:
       - "3001"
+    volumes:
+      - ./container:/app
     networks:
       - app
     restart: always

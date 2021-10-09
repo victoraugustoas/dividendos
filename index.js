@@ -6,6 +6,36 @@ const urlDB =
     ? "http://localhost:3000"
     : "http://db:3000";
 
+const resolve_captcha = async (page) => {
+  const result = await page.evaluate(() =>
+    Array.from(document.querySelectorAll("#px-captcha")).map((element) => ({
+      offsetLeft: element.offsetLeft,
+      offsetTop: element.offsetTop,
+    }))
+  );
+
+  let continueVerify = await page.evaluate(() =>
+    Boolean(document.querySelector("#px-captcha > p"))
+  );
+  let count = 0;
+
+  do {
+    await page.mouse.move(result[0].offsetLeft + 10, result[0].offsetTop + 10);
+    await page.waitForTimeout(20 * 1000);
+    await page.mouse.down();
+    await page.screenshot({ path: "screen1.png" });
+    await page.waitForTimeout(20 * 1000);
+    await page.screenshot({ path: "screen2.png" });
+    await page.mouse.up();
+    await page.waitForTimeout(20 * 1000);
+    await page.screenshot({ path: "screen3.png" });
+    continueVerify = await page.evaluate(() =>
+      Boolean(document.querySelector("#px-captcha > p"))
+    );
+    count++;
+  } while (continueVerify && count < 3);
+};
+
 const fetch_dividend = async (url) => {
   const browser = await puppeteer.launch({
     headless: true,
@@ -37,6 +67,10 @@ const fetch_dividend = async (url) => {
       ).map((element) => element.innerHTML)
     );
 
+    if (result.length === 0) {
+      await resolve_captcha(page);
+    }
+
     await page.waitForTimeout(5 * 1000);
     await page.screenshot({ path: "screen.png" });
 
@@ -62,7 +96,6 @@ const exist_ticker = async (ticker) => {
 
 const store_dividend = async (ticker) => {
   const url = `https://seekingalpha.com/symbol/${ticker}/dividends/scorecard`;
-  console.log("🚀 ~ file: index.js ~ line 65 ~ conststore_dividend= ~ url", url)
 
   try {
     const exists = await exist_ticker(ticker);

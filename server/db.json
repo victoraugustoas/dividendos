@@ -2,7 +2,7 @@
   "ticker": [
     {
       "dividend": 0.63,
-      "updateAt": "2021-10-08T12:46:55.740Z",
+      "updateAt": "2021-10-09T07:05:11.425Z",
       "id": "pld"
     },
     {
@@ -12,9 +12,33 @@
     },
     {
       "dividend": 1.07,
-      "ticker": "frt",
-      "updateAt": "2021-10-09T06:41:19.705Z",
+      "updateAt": "2021-10-09T07:01:46.742Z",
       "id": "frt"
+    },
+    {
+      "dividend": 0.17,
+      "updateAt": "2021-10-09T06:59:19.801Z",
+      "id": "invh"
+    },
+    {
+      "dividend": 2.87,
+      "updateAt": "2021-10-09T07:04:52.075Z",
+      "id": "eqix"
+    },
+    {
+      "dividend": 0.52,
+      "updateAt": "2021-10-09T07:21:42.869Z",
+      "id": "krc"
+    },
+    {
+      "dividend": 0.1,
+      "updateAt": "2021-10-09T07:27:16.211Z",
+      "id": "amh"
+    },
+    {
+      "dividend": null,
+      "updateAt": "2021-10-09T07:39:15.787Z",
+      "id": "els"
     }
   ]
 }
