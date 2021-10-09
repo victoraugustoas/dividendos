@@ -4,12 +4,16 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "prod": "NODE_ENV=production node server.js"
+    "prod": "NODE_ENV=production node server.js",
+    "start": "nodemon server.js"
   },
   "dependencies": {
     "axios": "^0.22.0",
     "express": "^4.17.1",
     "json-server": "^0.17.0",
     "puppeteer": "^10.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
   }
 }

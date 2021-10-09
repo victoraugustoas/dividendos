@@ -3,6 +3,9 @@ const app = express();
 const port = 3001;
 const axios = require("axios").default;
 const { store_dividend } = require("./index");
+const EventEmitter = require("events");
+
+const emitter = new EventEmitter();
 
 emitter.setMaxListeners(0);
 
