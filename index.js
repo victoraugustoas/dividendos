@@ -100,7 +100,7 @@ const store_dividend = async (ticker) => {
 
     if (exists) {
       // ainda nao atualizou no mes
-      if (!isThisMonth(data.updateAt)) {
+      if (!isThisMonth(new Date(data.updateAt))) {
         const dividend = await fetch_dividend(url);
 
         if (dividend > 0) {
