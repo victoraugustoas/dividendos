@@ -39,7 +39,7 @@ const resolve_captcha = async (page) => {
 
 const fetch_dividend = async (url) => {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     args: [
       "--disable-features=site-per-process",
       "--no-sandbox",
