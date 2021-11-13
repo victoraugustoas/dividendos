@@ -25,6 +25,12 @@
       "ticker": "mxrf11",
       "updateAt": "2021-11-13T16:00:54.775Z",
       "id": "mxrf11"
+    },
+    {
+      "dividend": 0.6,
+      "ticker": "hfof11",
+      "updateAt": "2021-11-13T16:04:31.793Z",
+      "id": "hfof11"
     }
   ]
 }

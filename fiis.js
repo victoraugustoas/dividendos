@@ -1,6 +1,6 @@
 const puppeteer = require("puppeteer");
 const axios = require("axios").default;
-const { isThisMonth } = require("date-fns");
+const { isThisWeek } = require("date-fns");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
@@ -12,9 +12,7 @@ const urlDB =
 const fetch_dividend = async (url) => {
   try {
     const response = await axios.get(url, {
-      headers: {
-        Cookie: "_adasys=86fc8772-3be6-4929-b9bc-301e9fde4587",
-      },
+      withCredentials: true,
     });
 
     const { window } = new JSDOM(response.data);
