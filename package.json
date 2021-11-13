@@ -5,12 +5,14 @@
   "license": "MIT",
   "scripts": {
     "prod": "NODE_ENV=production node server.js",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "db": "json-server --watch ./server/db.json"
   },
   "dependencies": {
     "axios": "^0.22.0",
     "date-fns": "^2.25.0",
     "express": "^4.17.1",
+    "jsdom": "^18.1.0",
     "json-server": "^0.17.0",
     "puppeteer": "^10.4.0"
   },

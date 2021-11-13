@@ -39,7 +39,7 @@ const resolve_captcha = async (page) => {
 
 const fetch_dividend = async (url) => {
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     args: [
       "--disable-features=site-per-process",
       "--no-sandbox",
@@ -85,10 +85,30 @@ const fetch_dividend = async (url) => {
 
 const exist_ticker = async (ticker) => {
   try {
-    const { data } = await axios.get(`${urlDB}/ticker/${ticker}`);
+    const { data } = await axios.get(`${urlDB}/reits/${ticker}`);
     return { exists: Boolean(data), data };
   } catch (error) {
     return { exists: false, data: null };
+  }
+};
+
+const set_ticker = async (ticker, dividend) => {
+  if (dividend) {
+    await axios.post(`${urlDB}/reits`, {
+      dividend,
+      ticker,
+      updateAt: new Date(),
+      id: ticker,
+    });
+  }
+};
+
+const updateTicker = async (ticker, dividend) => {
+  if (dividend) {
+    await axios.put(`${urlDB}/reits/${ticker}`, {
+      dividend: dividend,
+      updateAt: new Date(),
+    });
   }
 };
 
@@ -102,26 +122,15 @@ const store_dividend = async (ticker) => {
       // ainda nao atualizou no mes
       if (!isThisMonth(new Date(data.updateAt))) {
         const dividend = await fetch_dividend(url);
-
-        if (dividend > 0) {
-          await axios.put(`${urlDB}/ticker/${ticker}`, {
-            dividend: dividend,
-            updateAt: new Date(),
-          });
-        }
+        updateTicker(ticker, dividend);
       }
     } else {
       const dividend = await fetch_dividend(url);
-      await axios.post(`${urlDB}/ticker`, {
-        dividend: dividend > 0 ? dividend : null,
-        ticker,
-        updateAt: new Date(),
-        id: ticker,
-      });
+      set_ticker(ticker, dividend);
     }
   } catch (error) {
     throw error;
   }
 };
 
-module.exports = { fetch_dividend, store_dividend };
+module.exports = { fetch_dividend, store_dividend, exist_ticker };

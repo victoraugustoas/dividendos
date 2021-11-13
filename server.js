@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const port = 3001;
 const axios = require("axios").default;
-const { store_dividend } = require("./index");
+const reits = require("./reits");
+const fiis = require("./fiis");
 const EventEmitter = require("events");
 
 const emitter = new EventEmitter();
@@ -14,13 +15,26 @@ const urlDB =
     ? "http://localhost:3000"
     : "http://db:3000";
 
-app.get("/ticker/:ticker", async (req, res) => {
+app.get("/reits/:ticker", async (req, res) => {
   const ticker = String(req.params.ticker).toLowerCase();
 
-  store_dividend(ticker);
+  reits.store_dividend(ticker);
 
   try {
-    const { data } = await axios.get(`${urlDB}/ticker/${ticker}`);
+    const { data } = await reits.exist_ticker(ticker);
+    res.send(data);
+  } catch (error) {
+    res.send("erro");
+  }
+});
+
+app.get("/fiis/:ticker", async (req, res) => {
+  const ticker = String(req.params.ticker).toLowerCase();
+
+  fiis.store_dividend(ticker);
+
+  try {
+    const { data } = await fiis.exist_ticker(ticker);
     res.send(data);
   } catch (error) {
     res.send("erro");
