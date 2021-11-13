@@ -18,7 +18,7 @@ const urlDB =
 app.get("/reits/:ticker", async (req, res) => {
   const ticker = String(req.params.ticker).toLowerCase();
 
-  reits.store_dividend(ticker);
+  await reits.store_dividend(ticker);
 
   try {
     const { data } = await reits.exist_ticker(ticker);
@@ -31,7 +31,7 @@ app.get("/reits/:ticker", async (req, res) => {
 app.get("/fiis/:ticker", async (req, res) => {
   const ticker = String(req.params.ticker).toLowerCase();
 
-  fiis.store_dividend(ticker);
+  await fiis.store_dividend(ticker);
 
   try {
     const { data } = await fiis.exist_ticker(ticker);

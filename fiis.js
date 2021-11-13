@@ -67,11 +67,11 @@ const store_dividend = async (ticker) => {
       // ainda nao atualizou na semana
       if (!isThisWeek(new Date(data.updateAt))) {
         const dividend = await fetch_dividend(url);
-        updateTicker(ticker, dividend);
+        await updateTicker(ticker, dividend);
       }
     } else {
       const dividend = await fetch_dividend(url);
-      set_ticker(ticker, dividend);
+      await set_ticker(ticker, dividend);
     }
   } catch (error) {
     throw error;

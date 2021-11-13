@@ -5,6 +5,30 @@
       "ticker": "pld",
       "updateAt": "2021-11-13T15:21:18.679Z",
       "id": "pld"
+    },
+    {
+      "dividend": 0.17,
+      "ticker": "invh",
+      "updateAt": "2021-11-13T17:13:40.693Z",
+      "id": "invh"
+    },
+    {
+      "dividend": 1.07,
+      "ticker": "frt",
+      "updateAt": "2021-11-13T17:13:49.810Z",
+      "id": "frt"
+    },
+    {
+      "dividend": 2.87,
+      "ticker": "eqix",
+      "updateAt": "2021-11-13T17:14:03.425Z",
+      "id": "eqix"
+    },
+    {
+      "dividend": 0.98,
+      "ticker": "bxp",
+      "updateAt": "2021-11-13T17:14:36.602Z",
+      "id": "bxp"
     }
   ],
   "fiis": [
@@ -31,6 +55,12 @@
       "ticker": "hfof11",
       "updateAt": "2021-11-13T16:04:31.793Z",
       "id": "hfof11"
+    },
+    {
+      "dividend": 0.8,
+      "ticker": "relg11",
+      "updateAt": "2021-11-13T17:14:51.667Z",
+      "id": "relg11"
     }
   ]
 }

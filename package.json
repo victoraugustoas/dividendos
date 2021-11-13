@@ -13,8 +13,7 @@
     "date-fns": "^2.25.0",
     "express": "^4.17.1",
     "jsdom": "^18.1.0",
-    "json-server": "^0.17.0",
-    "puppeteer": "^10.4.0"
+    "json-server": "^0.17.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.13"
