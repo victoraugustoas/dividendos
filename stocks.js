@@ -52,6 +52,7 @@ const updateTicker = async (ticker, dividend) => {
     await axios.put(`${urlDB}/stocks/${ticker}`, {
       dividend: dividend,
       updateAt: new Date(),
+      ticker,
     });
   }
 };
@@ -63,10 +64,10 @@ const store_dividend = async (ticker) => {
     const { exists, data } = await exist_ticker(ticker);
 
     if (exists) {
-      // ainda nao atualizou na semana
+      // ainda nao atualizou no dia
       if (!isSameDay(new Date(data.updateAt), new Date())) {
         const dividend = await fetch_dividend(url);
-        await updateTicker(ticker, dividend); 
+        await updateTicker(ticker, dividend);
       }
     } else {
       const dividend = await fetch_dividend(url);

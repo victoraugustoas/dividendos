@@ -1,5 +1,5 @@
 const axios = require("axios").default;
-const { isThisWeek } = require("date-fns");
+const { isSameDay } = require("date-fns");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
@@ -52,6 +52,7 @@ const updateTicker = async (ticker, dividend) => {
     await axios.put(`${urlDB}/fiis/${ticker}`, {
       dividend: dividend,
       updateAt: new Date(),
+      ticker,
     });
   }
 };
@@ -63,8 +64,8 @@ const store_dividend = async (ticker) => {
     const { exists, data } = await exist_ticker(ticker);
 
     if (exists) {
-      // ainda nao atualizou na semana
-      if (!isThisWeek(new Date(data.updateAt))) {
+      // ainda nao atualizou no dia
+      if (!isSameDay(new Date(data.updateAt), new Date())) {
         const dividend = await fetch_dividend(url);
         await updateTicker(ticker, dividend);
       }

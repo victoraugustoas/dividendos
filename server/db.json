@@ -3,72 +3,24 @@
     {
       "dividend": 0.63,
       "ticker": "pld",
-      "updateAt": "2021-11-13T15:21:18.679Z",
+      "updateAt": "2021-12-14T23:26:33.674Z",
       "id": "pld"
-    },
-    {
-      "dividend": 0.17,
-      "ticker": "invh",
-      "updateAt": "2021-11-13T17:13:40.693Z",
-      "id": "invh"
-    },
-    {
-      "dividend": 1.07,
-      "ticker": "frt",
-      "updateAt": "2021-11-13T17:13:49.810Z",
-      "id": "frt"
-    },
-    {
-      "dividend": 2.87,
-      "ticker": "eqix",
-      "updateAt": "2021-11-13T17:14:03.425Z",
-      "id": "eqix"
-    },
-    {
-      "dividend": 0.98,
-      "ticker": "bxp",
-      "updateAt": "2021-11-13T17:14:36.602Z",
-      "id": "bxp"
     }
   ],
   "fiis": [
     {
-      "dividend": 0.5295,
+      "dividend": 0.58,
       "ticker": "rect11",
-      "updateAt": "2021-11-13T15:59:25.536Z",
+      "updateAt": "2021-12-14T23:25:44.468Z",
       "id": "rect11"
-    },
-    {
-      "dividend": 0.9,
-      "ticker": "hgbs11",
-      "updateAt": "2021-11-13T15:59:57.570Z",
-      "id": "hgbs11"
-    },
-    {
-      "dividend": 0.09,
-      "ticker": "mxrf11",
-      "updateAt": "2021-11-13T16:00:54.775Z",
-      "id": "mxrf11"
-    },
-    {
-      "dividend": 0.6,
-      "ticker": "hfof11",
-      "updateAt": "2021-11-13T16:04:31.793Z",
-      "id": "hfof11"
-    },
-    {
-      "dividend": 0.8,
-      "ticker": "relg11",
-      "updateAt": "2021-11-13T17:14:51.667Z",
-      "id": "relg11"
     }
   ],
   "stocks": [
     {
-      "dividend": 0.42,
-      "ticker": "ko",
-      "updateAt": "2021-12-14T23:21:17.887Z",
-      "id": "ko"
+      "dividend": 0.62,
+      "ticker": "msft",
+      "updateAt": "2021-12-14T23:26:55.942Z",
+      "id": "msft"
     }
   ]
 }
