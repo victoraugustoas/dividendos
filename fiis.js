@@ -1,4 +1,3 @@
-const puppeteer = require("puppeteer");
 const axios = require("axios").default;
 const { isThisWeek } = require("date-fns");
 const jsdom = require("jsdom");

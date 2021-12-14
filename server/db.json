@@ -62,5 +62,13 @@
       "updateAt": "2021-11-13T17:14:51.667Z",
       "id": "relg11"
     }
+  ],
+  "stocks": [
+    {
+      "dividend": 0.42,
+      "ticker": "ko",
+      "updateAt": "2021-12-14T23:21:17.887Z",
+      "id": "ko"
+    }
   ]
 }

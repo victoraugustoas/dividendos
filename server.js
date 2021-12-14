@@ -3,6 +3,7 @@ const app = express();
 const port = 3001;
 const axios = require("axios").default;
 const reits = require("./reits");
+const stocks = require("./stocks");
 const fiis = require("./fiis");
 const EventEmitter = require("events");
 
@@ -22,6 +23,19 @@ app.get("/reits/:ticker", async (req, res) => {
 
   try {
     const { data } = await reits.exist_ticker(ticker);
+    res.send(data);
+  } catch (error) {
+    res.send("erro");
+  }
+});
+
+app.get("/stocks/:ticker", async (req, res) => {
+  const ticker = String(req.params.ticker).toLowerCase();
+
+  await stocks.store_dividend(ticker);
+
+  try {
+    const { data } = await stocks.exist_ticker(ticker);
     res.send(data);
   } catch (error) {
     res.send("erro");

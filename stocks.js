@@ -1,5 +1,5 @@
 const axios = require("axios").default;
-const { isThisWeek } = require("date-fns");
+const { isSameDay } = require("date-fns");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
@@ -29,7 +29,7 @@ const fetch_dividend = async (url) => {
 
 const exist_ticker = async (ticker) => {
   try {
-    const { data } = await axios.get(`${urlDB}/reits/${ticker}`);
+    const { data } = await axios.get(`${urlDB}/stocks/${ticker}`);
     return { exists: Boolean(data), data };
   } catch (error) {
     return { exists: false, data: null };
@@ -38,7 +38,7 @@ const exist_ticker = async (ticker) => {
 
 const set_ticker = async (ticker, dividend) => {
   if (dividend) {
-    await axios.post(`${urlDB}/reits`, {
+    await axios.post(`${urlDB}/stocks`, {
       dividend,
       ticker,
       updateAt: new Date(),
@@ -49,7 +49,7 @@ const set_ticker = async (ticker, dividend) => {
 
 const updateTicker = async (ticker, dividend) => {
   if (dividend) {
-    await axios.put(`${urlDB}/reits/${ticker}`, {
+    await axios.put(`${urlDB}/stocks/${ticker}`, {
       dividend: dividend,
       updateAt: new Date(),
     });
@@ -57,16 +57,16 @@ const updateTicker = async (ticker, dividend) => {
 };
 
 const store_dividend = async (ticker) => {
-  const url = `https://statusinvest.com.br/reits/${ticker}`;
+  const url = `https://statusinvest.com.br/acoes/eua/${ticker}`;
 
   try {
     const { exists, data } = await exist_ticker(ticker);
 
     if (exists) {
       // ainda nao atualizou na semana
-      if (!isThisWeek(new Date(data.updateAt))) {
+      if (!isSameDay(new Date(data.updateAt), new Date())) {
         const dividend = await fetch_dividend(url);
-        await updateTicker(ticker, dividend);
+        await updateTicker(ticker, dividend); 
       }
     } else {
       const dividend = await fetch_dividend(url);
