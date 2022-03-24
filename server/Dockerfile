@@ -2,8 +2,6 @@ FROM node:16-slim
 
 WORKDIR /app
 
-COPY ./db.json $WORKDIR
-
 RUN npm install -g json-server
 
 EXPOSE 3000

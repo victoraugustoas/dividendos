@@ -74,7 +74,10 @@ const store_dividend = async (ticker) => {
       await set_ticker(ticker, dividend);
     }
   } catch (error) {
-    throw error;
+    console.log(
+      "🚀 ~ file: reits.js ~ line 77 ~ conststore_dividend= ~ error",
+      error
+    );
   }
 };
 

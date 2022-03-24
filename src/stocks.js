@@ -29,7 +29,7 @@ const fetch_dividend = async (url) => {
 
 const exist_ticker = async (ticker) => {
   try {
-    const { data } = await axios.get(`${urlDB}/fiis/${ticker}`);
+    const { data } = await axios.get(`${urlDB}/stocks/${ticker}`);
     return { exists: Boolean(data), data };
   } catch (error) {
     return { exists: false, data: null };
@@ -38,7 +38,7 @@ const exist_ticker = async (ticker) => {
 
 const set_ticker = async (ticker, dividend) => {
   if (dividend) {
-    await axios.post(`${urlDB}/fiis`, {
+    await axios.post(`${urlDB}/stocks`, {
       dividend,
       ticker,
       updateAt: new Date(),
@@ -49,7 +49,7 @@ const set_ticker = async (ticker, dividend) => {
 
 const updateTicker = async (ticker, dividend) => {
   if (dividend) {
-    await axios.put(`${urlDB}/fiis/${ticker}`, {
+    await axios.put(`${urlDB}/stocks/${ticker}`, {
       dividend: dividend,
       updateAt: new Date(),
       ticker,
@@ -58,7 +58,7 @@ const updateTicker = async (ticker, dividend) => {
 };
 
 const store_dividend = async (ticker) => {
-  const url = `https://statusinvest.com.br/fundos-imobiliarios/${ticker}`;
+  const url = `https://statusinvest.com.br/acoes/eua/${ticker}`;
 
   try {
     const { exists, data } = await exist_ticker(ticker);
@@ -74,7 +74,10 @@ const store_dividend = async (ticker) => {
       await set_ticker(ticker, dividend);
     }
   } catch (error) {
-    throw error;
+    console.log(
+      "🚀 ~ file: stocks.js ~ line 77 ~ conststore_dividend= ~ error",
+      error
+    );
   }
 };
 

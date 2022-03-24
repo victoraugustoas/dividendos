@@ -25,7 +25,7 @@ app.get("/reits/:ticker", async (req, res) => {
     const { data } = await reits.exist_ticker(ticker);
     res.send(data);
   } catch (error) {
-    res.send("erro");
+    res.sendStatus(500);
   }
 });
 
@@ -38,7 +38,7 @@ app.get("/stocks/:ticker", async (req, res) => {
     const { data } = await stocks.exist_ticker(ticker);
     res.send(data);
   } catch (error) {
-    res.send("erro");
+    res.sendStatus(500);
   }
 });
 
@@ -51,7 +51,7 @@ app.get("/fiis/:ticker", async (req, res) => {
     const { data } = await fiis.exist_ticker(ticker);
     res.send(data);
   } catch (error) {
-    res.send("erro");
+    res.sendStatus(500);
   }
 });
 

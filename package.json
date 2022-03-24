@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "prod": "NODE_ENV=production node server.js",
+    "prod": "NODE_ENV=production node ./src/server.js",
     "start": "nodemon server.js",
     "db": "json-server --watch ./server/db.json"
   },

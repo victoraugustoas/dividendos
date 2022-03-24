@@ -1,26 +1,5 @@
 {
-  "reits": [
-    {
-      "dividend": 0.63,
-      "ticker": "pld",
-      "updateAt": "2021-12-14T23:26:33.674Z",
-      "id": "pld"
-    }
-  ],
-  "fiis": [
-    {
-      "dividend": 0.58,
-      "ticker": "rect11",
-      "updateAt": "2021-12-14T23:25:44.468Z",
-      "id": "rect11"
-    }
-  ],
-  "stocks": [
-    {
-      "dividend": 0.62,
-      "ticker": "msft",
-      "updateAt": "2021-12-14T23:26:55.942Z",
-      "id": "msft"
-    }
-  ]
+  "reits": [],
+  "fiis": [],
+  "stocks": []
 }

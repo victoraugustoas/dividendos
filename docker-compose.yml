@@ -11,9 +11,12 @@ services:
       - "3001:3001"
     expose:
       - "3001"
+    volumes:
+      - ./src:/app/src
     networks:
       - app
     restart: always
+
   db:
     build: ./server
     ports:
@@ -21,7 +24,7 @@ services:
     expose:
       - "3000"
     volumes:
-      - ./server/db.json:/data/db.json
+      - ./server:/app
     networks:
       - app
     restart: always
