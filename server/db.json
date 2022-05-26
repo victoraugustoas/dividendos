@@ -1,5 +1,21 @@
 {
+  "etf_eua": [
+    {
+      "dividend": 0.352262,
+      "ticker": "nobl",
+      "updateAt": "2022-05-26T05:01:50.347Z",
+      "id": "nobl"
+    }
+  ],
   "reits": [],
-  "fiis": [],
-  "stocks": []
+  "acoes": [],
+  "fundos-imobiliarios": [],
+  "acoes_eua": [
+    {
+      "dividend": 0.23,
+      "ticker": "aapl",
+      "updateAt": "2022-05-26T05:02:05.572Z",
+      "id": "aapl"
+    }
+  ]
 }

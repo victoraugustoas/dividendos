@@ -2,53 +2,27 @@ const express = require("express");
 const app = express();
 const port = 3001;
 const axios = require("axios").default;
-const reits = require("./reits");
-const stocks = require("./stocks");
-const fiis = require("./fiis");
+const getDividend = require("./get_dividend");
 const EventEmitter = require("events");
 
 const emitter = new EventEmitter();
 
 emitter.setMaxListeners(0);
+app.use(express.json());
 
 const urlDB =
   process.env.NODE_ENV !== "production"
     ? "http://localhost:3000"
     : "http://db:3000";
 
-app.get("/reits/:ticker", async (req, res) => {
-  const ticker = String(req.params.ticker).toLowerCase();
+app.post("/dividend", async (req, res) => {
+  const ticker = String(req.body.ticker).toLowerCase();
+  const path = String(req.body.path).toLowerCase();
 
-  await reits.store_dividend(ticker);
-
-  try {
-    const { data } = await reits.exist_ticker(ticker);
-    res.send(data);
-  } catch (error) {
-    res.sendStatus(500);
-  }
-});
-
-app.get("/stocks/:ticker", async (req, res) => {
-  const ticker = String(req.params.ticker).toLowerCase();
-
-  await stocks.store_dividend(ticker);
+  await getDividend.store_dividend({ ticker, path });
 
   try {
-    const { data } = await stocks.exist_ticker(ticker);
-    res.send(data);
-  } catch (error) {
-    res.sendStatus(500);
-  }
-});
-
-app.get("/fiis/:ticker", async (req, res) => {
-  const ticker = String(req.params.ticker).toLowerCase();
-
-  await fiis.store_dividend(ticker);
-
-  try {
-    const { data } = await fiis.exist_ticker(ticker);
+    const { data } = await getDividend.exist_ticker({ ticker, path });
     res.send(data);
   } catch (error) {
     res.sendStatus(500);

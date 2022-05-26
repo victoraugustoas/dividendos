@@ -27,18 +27,20 @@ const fetch_dividend = async (url) => {
   }
 };
 
-const exist_ticker = async (ticker) => {
+const formatPath = (path) => String(path).replace("/", "_");
+
+const exist_ticker = async ({ ticker, path }) => {
   try {
-    const { data } = await axios.get(`${urlDB}/stocks/${ticker}`);
+    const { data } = await axios.get(`${urlDB}/${formatPath(path)}/${ticker}`);
     return { exists: Boolean(data), data };
   } catch (error) {
     return { exists: false, data: null };
   }
 };
 
-const set_ticker = async (ticker, dividend) => {
+const set_ticker = async ({ ticker, dividend, path }) => {
   if (dividend) {
-    await axios.post(`${urlDB}/stocks`, {
+    axios.post(`${urlDB}/${formatPath(path)}`, {
       dividend,
       ticker,
       updateAt: new Date(),
@@ -47,9 +49,9 @@ const set_ticker = async (ticker, dividend) => {
   }
 };
 
-const updateTicker = async (ticker, dividend) => {
+const updateTicker = async ({ ticker, dividend, path }) => {
   if (dividend) {
-    await axios.put(`${urlDB}/stocks/${ticker}`, {
+    await axios.put(`${urlDB}/${formatPath(path)}/${ticker}`, {
       dividend: dividend,
       updateAt: new Date(),
       ticker,
@@ -57,25 +59,25 @@ const updateTicker = async (ticker, dividend) => {
   }
 };
 
-const store_dividend = async (ticker) => {
-  const url = `https://statusinvest.com.br/acoes/eua/${ticker}`;
+const store_dividend = async ({ ticker, path }) => {
+  const url = `https://statusinvest.com.br/${path}/${ticker}`;
 
   try {
-    const { exists, data } = await exist_ticker(ticker);
+    const { exists, data } = await exist_ticker({ ticker, path });
 
     if (exists) {
       // ainda nao atualizou no dia
       if (!isSameDay(new Date(data.updateAt), new Date())) {
         const dividend = await fetch_dividend(url);
-        await updateTicker(ticker, dividend);
+        await updateTicker({ ticker, dividend, path });
       }
     } else {
       const dividend = await fetch_dividend(url);
-      await set_ticker(ticker, dividend);
+      await set_ticker({ ticker, dividend, path });
     }
   } catch (error) {
     console.log(
-      "🚀 ~ file: stocks.js ~ line 77 ~ conststore_dividend= ~ error",
+      "🚀 ~ file: fiis.js ~ line 77 ~ conststore_dividend= ~ error",
       error
     );
   }
