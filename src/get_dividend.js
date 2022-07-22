@@ -2,11 +2,12 @@ const axios = require("axios").default;
 const { isSameDay } = require("date-fns");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+const { MongoClient } = require("mongodb");
 
 const urlDB =
   process.env.NODE_ENV !== "production"
-    ? "http://localhost:3000"
-    : "http://db:3000";
+    ? "mongodb://root:example@localhost:27017"
+    : "mongodb://root:example@mongo:27017";
 
 const fetch_dividend = async (url) => {
   try {
@@ -29,57 +30,83 @@ const fetch_dividend = async (url) => {
 
 const formatPath = (path) => String(path).replace("/", "_");
 
-const exist_ticker = async ({ ticker, path }) => {
+const exist_ticker = async ({ ticker, collection }) => {
   try {
-    const { data } = await axios.get(`${urlDB}/${formatPath(path)}/${ticker}`);
+    const data = await collection.findOne({ ticker });
     return { exists: Boolean(data), data };
   } catch (error) {
     return { exists: false, data: null };
   }
 };
 
-const set_ticker = async ({ ticker, dividend, path }) => {
+const set_ticker = async ({ ticker, dividend, collection }) => {
   if (dividend) {
-    axios.post(`${urlDB}/${formatPath(path)}`, {
+    await collection.insertOne({
+      updateAt: new Date(),
       dividend,
       ticker,
-      updateAt: new Date(),
-      id: ticker,
     });
   }
 };
 
-const updateTicker = async ({ ticker, dividend, path }) => {
+const updateTicker = async ({ ticker, dividend, collection }) => {
   if (dividend) {
-    await axios.put(`${urlDB}/${formatPath(path)}/${ticker}`, {
-      dividend: dividend,
-      updateAt: new Date(),
-      ticker,
-    });
+    const updateData = { dividend: dividend, updateAt: new Date() };
+    await collection.updateOne({ ticker }, { $set: updateData });
+  }
+};
+
+const connectDB = async () => {
+  try {
+    const client = new MongoClient(urlDB);
+    return client.connect();
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: get_dividend.js ~ line 69 ~ connectDB ~ error",
+      error
+    );
   }
 };
 
 const store_dividend = async ({ ticker, path }) => {
   const url = `https://statusinvest.com.br/${path}/${ticker}`;
 
+  const client = await connectDB();
+
   try {
-    const { exists, data } = await exist_ticker({ ticker, path });
+    const collection = await client
+      .db("dividends")
+      .collection(formatPath(path));
+
+    const { exists, data } = await exist_ticker({ ticker, collection });
+    if (exists) {
+      console.log({ ticker, dividend: data.dividend });
+    } else {
+      console.log({ ticker, dividend: data });
+    }
 
     if (exists) {
       // ainda nao atualizou no dia
       if (!isSameDay(new Date(data.updateAt), new Date())) {
         const dividend = await fetch_dividend(url);
-        await updateTicker({ ticker, dividend, path });
+        await updateTicker({ ticker, dividend, collection });
+        const { data } = await exist_ticker({ ticker, collection });
+        return data;
       }
     } else {
       const dividend = await fetch_dividend(url);
-      await set_ticker({ ticker, dividend, path });
+      await set_ticker({ ticker, dividend, collection });
+      const { data } = await exist_ticker({ ticker, collection });
+      return data;
     }
+    return data;
   } catch (error) {
     console.log(
       "🚀 ~ file: fiis.js ~ line 77 ~ conststore_dividend= ~ error",
       error
     );
+  } finally {
+    await client.close();
   }
 };
 
